@@ -1,2 +1,3 @@
-# md5-cracking-challenge
-a js md5 cracking challenge
+# an md5 cracking challenge
+
+the password is pretty strong good luck
