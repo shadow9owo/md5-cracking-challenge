@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cracking challenge v2</title>
+</head>
+<body onload="loaded()">
+    <center id="center">
+        <h1>cracking challenge v2</h1>
+        <p>an md5 cracking challenge</p>
+        <input style="height: 32px;width: 256px;" id="inputfield" type="text" placeholder="enter your password here." onkeydown="keypressed(event)" title="press enter to submit">
+    </center>
+</body>
+</html>
+<style>
+    input::placeholder {
+        text-align: center;
+    }
+    input {
+        text-align: center;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.0/spark-md5.min.js"></script>
+
+<script>
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+function setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";";
+}
+
+function loaded() {
+        if (getCookie("start") == null) {
+            setCookie("start",Date.now());
+        }
+    }
+function md5(str) {
+        const spark = new SparkMD5();
+        spark.append(str);
+        return spark.end();
+    }
+    
+function keypressed(e) {
+    var keynum;
+
+    if (window.event) {              
+        keynum = e.keyCode;
+    } else if (e.which) {            
+        keynum = e.which;
+    }
+
+    if (keynum == 13) {
+        if (md5(document.getElementById("inputfield").value) == "236f09efdbfde0eeeba8dc57ec37a595") {
+            const paragraph = document.createElement("p");
+            paragraph.textContent = "time when it was cracked: " + ((Date.now() - parseInt(getCookie("start"))) / 60000) + " minutes";
+            document.getElementById("center").appendChild(paragraph);
+            alert("cracked");
+        }else {
+            alert("error");
+        }
+    }
+}
+</script>
